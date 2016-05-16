@@ -1,0 +1,23 @@
+---
+# tasks file for postgresql
+- name: check/create data backup container
+  docker:
+    name: "{{ datastore_container_name }}"
+    image: >-
+      redis{{ ':%s' % redis_docker_tag if redis_docker_tag else '' }}
+    state: present
+    volumes:
+      - /data
+    command: "true"
+  when: use_datastore_container
+
+- name: check/create redis container
+  docker:
+    name: "{{ redis_container_name }}"
+    image: >-
+      redis{{ ':%s' % redis_docker_tag if redis_docker_tag else '' }}
+    state: started
+    restart_policy: always
+    volumes_from: >-
+      {{ [datastore_container_name] if use_datastore_container else omit }}
+    ports: "{{ ['%s:6379' % expose_host_port] if expose_host_port else omit }}"
