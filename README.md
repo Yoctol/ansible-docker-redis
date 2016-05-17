@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Docker container running postgresql.
+Docker container running redis.
 
 Requirements
 ------------
@@ -14,13 +14,11 @@ Requirements
 Role Variables
 --------------
 
-`use_datastore_container`: Optional, whether to use a separate container to store postgresql data files. Default true.  
-`datastore_container_name`: Optional, the container name to store data. Default 'dbstore'.  
-`postgres_container_name`: Optional, the container name where postgresql running in. Default 'postgres'.  
-`expose_host_port`: Optional, the port to expose postgresql to the host. Default not expose postgresql to the host.  
-`postgres_docker_tag`: Optional, the postgres docker image tag name to use. Default 'latest'.  
-`postgres_docker_env`:  Optional, a dict of env var to be passed into postgresql container. Check [postgres docker page](https://hub.docker.com/_/postgres).  
-
+`use_backup_container`: Optional, whether to use a separate container to store redis backup files. Default true.  
+`backup_container_name`: Optional, the container name to store data. Default 'redis-backup'.  
+`redis_container_name`: Optional, the container name where postgresql running in. Default 'redis'.  
+`expose_host_port`: Optional, the port to expose redis from the host. Default not to expose redis to the host.  
+`redis_docker_tag`: Optional, the redis docker image tag name to use. Default 'latest'.  
 
 Dependencies
 ------------
@@ -31,7 +29,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - role: username.rolename
+         - role: ansible-docker-redis
            use_datastore_container: true
            datastore_container_name: dbstore
            postgres_container_name: postgres
