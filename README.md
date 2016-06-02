@@ -14,11 +14,25 @@ Requirements
 Role Variables
 --------------
 
-`use_backup_container`: Optional, whether to use a separate container to store redis backup files. Default true.  
-`backup_container_name`: Optional, the container name to store data. Default 'redis-backup'.  
-`redis_container_name`: Optional, the container name where postgresql running in. Default 'redis'.  
-`expose_host_port`: Optional, the port to expose redis from the host. Default not to expose redis to the host.  
-`redis_docker_tag`: Optional, the redis docker image tag name to use. Default 'latest'.  
+```yaml
+---
+# Optional, the redis docker image tag name to use. Default 'latest'.
+redis_docker_tag: ''
+
+# Optional, whether to use a separate container to store redis data files.
+use_backup_container: true
+
+# Optional, the container name to store data. Default 'redis-backup'.
+backup_container_name: redis-backup
+
+# Optional, the container name which running redis. Default 'redis'.
+redis_container_name: redis
+
+# Optional, the port to expose redis to the host.
+# Default not expose redis to the host.
+expose_host_port: 0
+
+```
 
 Dependencies
 ------------
