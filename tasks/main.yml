@@ -1,6 +1,6 @@
 ---
 - name: check/create data backup container
-  docker:
+  docker_container:
     name: "{{ backup_container_name }}"
     image: >-
       redis{{ ':%s' % redis_docker_tag if redis_docker_tag else '' }}
@@ -11,7 +11,7 @@
   when: use_backup_container
 
 - name: check/create redis container
-  docker:
+  docker_container:
     name: "{{ redis_container_name }}"
     image: >-
       redis{{ ':%s' % redis_docker_tag if redis_docker_tag else '' }}
@@ -19,4 +19,4 @@
     restart_policy: always
     volumes_from: >-
       {{ [backup_container_name] if use_backup_container else omit }}
-    ports: "{{ ['%s:6379' % expose_host_port] if expose_host_port else omit }}"
+    exposed_ports: "{{ ['%s:6379' % expose_host_port] if expose_host_port else omit }}"
